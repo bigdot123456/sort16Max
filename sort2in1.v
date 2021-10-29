@@ -1,8 +1,16 @@
-module #(parameter W =12 )
-sort2in1(
+/* -------------
+Project: Sort all data with heap method
+always keep max 16 values
+Author: liqh
+Date: 2021-10-29
+
+--------------*/
+module sort2in1 
+#(parameter W =12 ) 
+(
     input clk,
     input synrst,
-    input dataEn,
+    input DataEn,
     input [W-1:0]DataIn,
     output     [W-1:0] DataMax,
     output reg [W+4-1:0]DataSumOut
@@ -98,22 +106,39 @@ wire  R13_flag=DataIn>=R13;
 wire  R14_flag=DataIn>=R14;
 wire  R15_flag=DataIn>=R15;
 
-wire R00_shift_flag=R01_shift_flag | R01_flag;
-wire R01_shift_flag=R02_shift_flag | R02_flag;
-wire R02_shift_flag=R03_shift_flag | R03_flag;
-wire R03_shift_flag=R04_shift_flag | R04_flag;
-wire R04_shift_flag=R05_shift_flag | R05_flag;
-wire R05_shift_flag=R06_shift_flag | R06_flag;
-wire R06_shift_flag=R07_shift_flag | R07_flag;
-wire R07_shift_flag=R08_shift_flag | R08_flag;
-wire R08_shift_flag=R09_shift_flag | R09_flag;
-wire R09_shift_flag=R10_shift_flag | R10_flag;
-wire R10_shift_flag=R11_shift_flag | R11_flag;
-wire R11_shift_flag=R12_shift_flag | R12_flag;
-wire R12_shift_flag=R13_shift_flag | R13_flag;
-wire R13_shift_flag=R14_shift_flag | R14_flag;
-wire R14_shift_flag=R15_shift_flag | R15_flag;
-wire R15_shift_flag=1'b0;
+wire R00_shift_flag;
+wire R01_shift_flag;
+wire R02_shift_flag;
+wire R03_shift_flag;
+wire R04_shift_flag;
+wire R05_shift_flag;
+wire R06_shift_flag;
+wire R07_shift_flag;
+wire R08_shift_flag;
+wire R09_shift_flag;
+wire R10_shift_flag;
+wire R11_shift_flag;
+wire R12_shift_flag;
+wire R13_shift_flag;
+wire R14_shift_flag;
+wire R15_shift_flag;
+
+assign  R00_shift_flag=R01_shift_flag | R01_flag;
+assign  R01_shift_flag=R02_shift_flag | R02_flag;
+assign  R02_shift_flag=R03_shift_flag | R03_flag;
+assign  R03_shift_flag=R04_shift_flag | R04_flag;
+assign  R04_shift_flag=R05_shift_flag | R05_flag;
+assign  R05_shift_flag=R06_shift_flag | R06_flag;
+assign  R06_shift_flag=R07_shift_flag | R07_flag;
+assign  R07_shift_flag=R08_shift_flag | R08_flag;
+assign  R08_shift_flag=R09_shift_flag | R09_flag;
+assign  R09_shift_flag=R10_shift_flag | R10_flag;
+assign  R10_shift_flag=R11_shift_flag | R11_flag;
+assign  R11_shift_flag=R12_shift_flag | R12_flag;
+assign  R12_shift_flag=R13_shift_flag | R13_flag;
+assign  R13_shift_flag=R14_shift_flag | R14_flag;
+assign  R14_shift_flag=R15_shift_flag | R15_flag;
+assign  R15_shift_flag=1'b0;
 
 
 // always_comb(*)
