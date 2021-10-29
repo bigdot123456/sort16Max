@@ -141,13 +141,13 @@ assign  R14_shift_flag=R15_shift_flag | R15_flag;
 assign  R15_shift_flag=1'b0;
 
 
-// always_comb(*)
+// always @(*)
 //     if(R15_flag)
 //         R15_next=DataIn;
 //     else 
-//         R15_next <= R15 ;
+//         R15_next=R15 ;
 
-// always_comb(*)
+// always @(*)
 //     if(R14_shift_flag)
 //         R14_next=R15;
 //     else if(R14_flag) 
@@ -155,33 +155,33 @@ assign  R15_shift_flag=1'b0;
 //     else
 //         R14_next=R14;
 
-// always_comb(*)  if(R13_shift_flag)  R13_next=R14;  else if(R13_flag)  R13_next <= DataIn ; else R13_next=R13;
-always_comb(*)                                          if(R15_flag)  R15_next <= DataIn ; else R15_next=R15;
-always_comb(*)  if(R14_shift_flag)  R14_next=R15;  else if(R14_flag)  R14_next <= DataIn ; else R14_next=R14;
-always_comb(*)  if(R13_shift_flag)  R13_next=R14;  else if(R13_flag)  R13_next <= DataIn ; else R13_next=R13;
-always_comb(*)  if(R12_shift_flag)  R12_next=R13;  else if(R12_flag)  R12_next <= DataIn ; else R12_next=R12;
-always_comb(*)  if(R11_shift_flag)  R11_next=R12;  else if(R11_flag)  R11_next <= DataIn ; else R11_next=R11;
-always_comb(*)  if(R10_shift_flag)  R10_next=R11;  else if(R10_flag)  R10_next <= DataIn ; else R10_next=R10;
-always_comb(*)  if(R09_shift_flag)  R09_next=R10;  else if(R09_flag)  R09_next <= DataIn ; else R09_next=R09;
-always_comb(*)  if(R08_shift_flag)  R08_next=R09;  else if(R08_flag)  R08_next <= DataIn ; else R08_next=R08;
-always_comb(*)  if(R07_shift_flag)  R07_next=R08;  else if(R07_flag)  R07_next <= DataIn ; else R07_next=R07;
-always_comb(*)  if(R06_shift_flag)  R06_next=R07;  else if(R06_flag)  R06_next <= DataIn ; else R06_next=R06;
-always_comb(*)  if(R05_shift_flag)  R05_next=R06;  else if(R05_flag)  R05_next <= DataIn ; else R05_next=R05;
-always_comb(*)  if(R04_shift_flag)  R04_next=R05;  else if(R04_flag)  R04_next <= DataIn ; else R04_next=R04;
-always_comb(*)  if(R03_shift_flag)  R03_next=R04;  else if(R03_flag)  R03_next <= DataIn ; else R03_next=R03;
-always_comb(*)  if(R02_shift_flag)  R02_next=R03;  else if(R02_flag)  R02_next <= DataIn ; else R02_next=R02;
-always_comb(*)  if(R01_shift_flag)  R01_next=R02;  else if(R01_flag)  R01_next <= DataIn ; else R01_next=R01;
-always_comb(*)  if(R00_shift_flag)  R00_next=R01;  else if(R00_flag)  R00_next <= DataIn ; else R00_next=R00;
+// always_comb @(*)  if(R13_shift_flag)  R13_next=R14;  else if(R13_flag)  R13_next = DataIn ; else R13_next=R13;
+always @(*)                                     		 if(R15_flag)  R15_next = DataIn ; else R15_next=R15;
+always @(*)  if(R14_shift_flag)  R14_next=R15;  else if(R14_flag)  R14_next = DataIn ; else R14_next=R14;
+always @(*)  if(R13_shift_flag)  R13_next=R14;  else if(R13_flag)  R13_next = DataIn ; else R13_next=R13;
+always @(*)  if(R12_shift_flag)  R12_next=R13;  else if(R12_flag)  R12_next = DataIn ; else R12_next=R12;
+always @(*)  if(R11_shift_flag)  R11_next=R12;  else if(R11_flag)  R11_next = DataIn ; else R11_next=R11;
+always @(*)  if(R10_shift_flag)  R10_next=R11;  else if(R10_flag)  R10_next = DataIn ; else R10_next=R10;
+always @(*)  if(R09_shift_flag)  R09_next=R10;  else if(R09_flag)  R09_next = DataIn ; else R09_next=R09;
+always @(*)  if(R08_shift_flag)  R08_next=R09;  else if(R08_flag)  R08_next = DataIn ; else R08_next=R08;
+always @(*)  if(R07_shift_flag)  R07_next=R08;  else if(R07_flag)  R07_next = DataIn ; else R07_next=R07;
+always @(*)  if(R06_shift_flag)  R06_next=R07;  else if(R06_flag)  R06_next = DataIn ; else R06_next=R06;
+always @(*)  if(R05_shift_flag)  R05_next=R06;  else if(R05_flag)  R05_next = DataIn ; else R05_next=R05;
+always @(*)  if(R04_shift_flag)  R04_next=R05;  else if(R04_flag)  R04_next = DataIn ; else R04_next=R04;
+always @(*)  if(R03_shift_flag)  R03_next=R04;  else if(R03_flag)  R03_next = DataIn ; else R03_next=R03;
+always @(*)  if(R02_shift_flag)  R02_next=R03;  else if(R02_flag)  R02_next = DataIn ; else R02_next=R02;
+always @(*)  if(R01_shift_flag)  R01_next=R02;  else if(R01_flag)  R01_next = DataIn ; else R01_next=R01;
+always @(*)  if(R00_shift_flag)  R00_next=R01;  else if(R00_flag)  R00_next = DataIn ; else R00_next=R00;
 
 // banlance tree for sum 16 value;
-wire [w:0] s_0;
-wire [w:0] s_1;
-wire [w:0] s_2;
-wire [w:0] s_3;
-wire [w:0] s_4;
-wire [w:0] s_5;
-wire [w:0] s_6;
-wire [w:0] s_7;
+wire [W:0] s_0;
+wire [W:0] s_1;
+wire [W:0] s_2;
+wire [W:0] s_3;
+wire [W:0] s_4;
+wire [W:0] s_5;
+wire [W:0] s_6;
+wire [W:0] s_7;
 
 assign s_0={1'b0,R15}+{1'b0,R00};
 assign s_1={1'b0,R14}+{1'b0,R01};
@@ -192,29 +192,29 @@ assign s_5={1'b0,R10}+{1'b0,R05};
 assign s_6={1'b0,R09}+{1'b0,R06};
 assign s_7={1'b0,R08}+{1'b0,R07};
 
-wire [w+1:0] s0_0;
-wire [w+1:0] s0_1;
-wire [w+1:0] s0_2;
-wire [w+1:0] s0_3;
+wire [W+1:0] s0_0;
+wire [W+1:0] s0_1;
+wire [W+1:0] s0_2;
+wire [W+1:0] s0_3;
 
 assign s0_0={1'b0,s_0}+{1'b0,s_7};
 assign s0_1={1'b0,s_1}+{1'b0,s_6};
 assign s0_2={1'b0,s_2}+{1'b0,s_5};
 assign s0_3={1'b0,s_3}+{1'b0,s_4};
 
-wire [w+2:0] s1_0;
-wire [w+2:0] s1_1;
+wire [W+2:0] s1_0;
+wire [W+2:0] s1_1;
 
 assign s1_0={1'b0,s0_0}+{1'b0,s0_3};
 assign s1_1={1'b0,s0_1}+{1'b0,s0_2};
 
-wire [w+3:0] s2_0;                   
+wire [W+3:0] s2_0;                   
                                      
 assign s2_0={1'b0,s1_0}+{1'b0,s1_1}; 
 
 // output the max 16 values                                            
 always @(clk)
-	if(syn_rst)
+	if(synrst)
 		DataSumOut<='b0;
 	else
 		DataSumOut<=s2_0;
