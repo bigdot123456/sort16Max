@@ -17,7 +17,8 @@
 `define DLY_1 1
 module read_signal
 #(parameter signal_WIDTH=10,
-parameter FILENAME="./pat/dfai.dat"
+parameter FILENAME="./pat/dfai.dat",
+parameter Bin_or_TXT=1
 )
 (
 input clk,
@@ -48,7 +49,8 @@ reg signed [signal_WIDTH-1:0] tmp_sig_I;
   end
 	
 //	integer status;
-
+integer result;
+reg [7:0] fbuf[3:0];
 //-- Apply Input Vectors -----
   always@(posedge clk) 
   begin 
@@ -56,14 +58,23 @@ reg signed [signal_WIDTH-1:0] tmp_sig_I;
       if ($feof(signal_FILE) != 0)
       begin
         signal_isSimulationEnd = 1;  
+        $display("Reach File end! Now use  Timeout to finish Simulation!",$time);
+        $fclose(signal_FILE);
 				#`LAST_TIME;
-        $finish(2);
+        $finish(1);
       end
       else
       begin
-        if ($fscanf(signal_FILE, "%d\n", tmp_sig_I) < 1)
+        if(Bin_or_TXT)begin
+             result=$fread( fbuf,signal_FILE );
+             tmp_sig_I={fbuf[3],fbuf[2]};
+        end else begin
+          result=$fscanf(signal_FILE, "%d\n", tmp_sig_I);
+        end
+      	if (result<1)
         begin
           signal_isSimulationEnd = 1;  
+          $display("File Read finish! Now wait finishing!",$time);
           #`LAST_TIME;
           $finish(2);
         end

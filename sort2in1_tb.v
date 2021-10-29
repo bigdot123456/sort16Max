@@ -16,7 +16,8 @@ Date: 2021-10-29
 `define DATA_FILE "./sort.dat"
         
 `include "system_init.v"                           
-`include "read_enable_signal.v"                    
+//`include "read_enable_signal.v"                    
+`include "read_signal.v"                    
 `include "tb_clock_div.v"		                      
                                                      
 module sort2in1_tb 
@@ -43,8 +44,9 @@ module sort2in1_tb
  wire [`DATA_WIDTH-1:0]  Data_in;                   
                                                      
 	wire clkDiv160;                                     
-	tb_clock_div #( 2) U_clkDiv160  ( .clk_in(clk),.rst(synrst), .clk_out(clkDiv160) ); 
-	read_enable_signal #(`DATA_WIDTH,`DATA_FILE,`DISPLAY_OK) U_data_in(.clk(clkDiv160),.enable(rst_x),.signal_out(Data_in)); 
+	tb_clock_div #( 2) U_clkDiv160  ( .clk_in(clk),.rst(synrst), .clk_out(clkDiv160) );  //  clkDiv160 should be used in read_enable_signal
+	//read_enable_signal #(`DATA_WIDTH,`DATA_FILE,`DISPLAY_OK) U_data_in(.clk(clk),.enable(rst_x),.signal_out(Data_in)); 
+  read_signal #(`DATA_WIDTH,`DATA_FILE,`DISPLAY_OK) U_data_in(.clk(clk),.signal_out(Data_in)); 
 
 wire DataEn;
 wire [W-1:0] DataIn;
@@ -52,7 +54,7 @@ wire [W-1:0] DataMax;
 wire [W+3:0] DataSumOut;
                                                  
 assign DataEn=1;
-assign DataIn=0;
+assign DataIn=Data_in;
  
 sort2in1 #(.W(12))U_sort2in1
 (

@@ -5,7 +5,8 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$NOVAS_HOME/share/PLI/lib/LINUX64:$NOVA
 
 xmverilog  +define+FSDB_DUMP ./lib/tb/timescale.v -f 1.f -l 1.log +libext+.v +incdir+./lib/tb  -access +rwc -loadpli1 debpli:novas_pli_boot
 
-verdi +define+FSDB_DUMP ./lib/tb/timescale.v -f 1.f -l 1.log +libext+.v +incdir+./lib/tb 
+verdi -sv +define+FSDB_DUMP ./lib/tb/timescale.v -f 1.f -l 1.log +libext+.v +incdir+./lib/tb  -ssf ./dump.fsdb   -nologo 
+
 
 xmverilog +linedebug +gui  ./lib/tb/timescale.v -f 1.f -l 1.log +libext+.v +incdir+./lib/tb  +define+FSDB_DUMP -access +rwc -loadpli1 debpli:novas_pli_boot
 
