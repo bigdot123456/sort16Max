@@ -1,5 +1,33 @@
-ncverilog -f 1.f -l 1.log +libext+.v +incdir+./lib/tb +access+w+r
+
+
+export  NOVAS_HOME=/eda/snps/verdi/Verdi_N-2017.12-SP2
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$NOVAS_HOME/share/PLI/lib/LINUX64:$NOVAS_HOME/share/PLI/IUS/LINUX64/boot" 
+
+xmverilog  +define+FSDB_DUMP ./lib/tb/timescale.v -f 1.f -l 1.log +libext+.v +incdir+./lib/tb  -access +rwc -loadpli1 debpli:novas_pli_boot
+
+verdi +define+FSDB_DUMP ./lib/tb/timescale.v -f 1.f -l 1.log +libext+.v +incdir+./lib/tb 
+
+xmverilog +linedebug +gui  ./lib/tb/timescale.v -f 1.f -l 1.log +libext+.v +incdir+./lib/tb  +define+FSDB_DUMP -access +rwc -loadpli1 debpli:novas_pli_boot
+
 iverilog -f 1.f -l 1.log -I ./lib/tb
+
+irun -access +rwc -loadpli1 debpli:novas_pli_boot -f XXXXXXX.f
+
+Use IUS PLI boot method while FSDB dumping commands specified in Tcl
+format, cmd.tcl.
+Using "ncvlog", "ncelab", "ncsim" trilogy:
+> ncvlog top.v
+> ncelab top -access +r -loadpli1 debpli:novas_pli_boot
+> ncsim top -i cmd.tcl
+Using "ncverilog":
+> ncverilog top.v -access +r +tcl+cmd.tcl -loadpli1
+debpli:novas_pli_boot
+Using "irun":
+> irun top.v -access +r +tcl+cmd.tcl -loadpli1
+debpli:novas_pli_boot
+
+
+
 
 ncvlog -f verilog.f
 ncvhdl -messages -smartorder -V93 -file vhdl.f

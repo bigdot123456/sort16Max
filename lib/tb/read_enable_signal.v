@@ -19,10 +19,11 @@ module read_enable_signal
 #(
 parameter signal_WIDTH=10,
 parameter FILENAME="./pat/dfai.dat",
+parameter display_OK=0,
 parameter repeat_time=1,
+parameter Bin_or_TXT=1,
 parameter delay=2,
-parameter repeat_rand=0,
-parameter display_OK=0
+parameter repeat_rand=0
 )
 (
 input clk,
@@ -67,7 +68,8 @@ always @(posedge clk)
       cnt<=cnt+1;
   end
 
-
+integer result;
+reg [7:0] fbuf[3:0];
 //-- Apply Input Vectors -----
   always@(posedge clk) 
   begin 
@@ -75,18 +77,28 @@ always @(posedge clk)
       if ($feof(signal_FILE) != 0)
       begin
         signal_isSimulationEnd = 1;  
+        $display("Reach File end! Now use  Timeout to finish Simulation!",$time);
+        $fclose(signal_FILE);
 				#`LAST_TIME;
-        $finish(2);
+        $finish(1);
       end
       else 
       if(enable&&cnt==repeat_time-1)
       begin
         #delay;
         index=index+1;
-      	if ($fscanf(signal_FILE, "%d\n", tmp_sig_I)<1)
+        if(Bin_or_TXT)begin
+             result=$fread( fbuf,signal_FILE );
+             tmp_sig_I={fbuf[3],fbuf[2]};
+        end else begin
+          result=$fscanf(signal_FILE, "%d\n", tmp_sig_I);
+        end
+      	if (result<1)
 	      begin
 	        signal_isSimulationEnd = 1;  
-	        #`LAST_TIME;
+	        $display("File Read finish! Total index is %x\n",index);
+            #`LAST_TIME;
+            $fclose(signal_FILE);
 	        $finish(2);
 	      end
 	      else
